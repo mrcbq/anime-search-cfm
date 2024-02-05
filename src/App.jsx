@@ -1,6 +1,6 @@
-import './App.css';
 import AnimeSlider from './components/AnimeSlider';
 import SearchBar from './components/SearchBar';
+import './App.css';
 
 function App() {
   return (
