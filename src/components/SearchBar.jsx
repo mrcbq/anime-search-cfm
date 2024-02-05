@@ -1,23 +1,35 @@
-// SearchBar.js
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAnimeData, setQuery } from '../redux/slices/searchSlice';
 
-const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+const SearchBar = () => {
+  const dispatch = useDispatch();
+  const [localQuery, setLocalQuery] = useState('');
+  // const fullState = useSelector((state) => state);
+  // console.log(fullState);
+  const query = useSelector((state) => state.search.query);
 
-  const handleSearch = () => {
-    onSearch(query);
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    dispatch(setQuery(localQuery))
   };
 
+  useEffect(() => {
+    if (query) {
+      dispatch(fetchAnimeData(query));
+    }
+ }, [dispatch, query]); 
+
   return (
-    <div>
+    <form onSubmit={handleSearch}>
       <input
         type="text"
-        placeholder="Search for anime title"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Naruto, Attack on Titan..."
+        value={localQuery}
+        onChange={(e) => setLocalQuery(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 

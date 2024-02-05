@@ -14,17 +14,12 @@ export const searchSlice = createSlice({
     query: '',
     searchResult: [],
     loading: false,
+    dataLoaded: false,
   },
   reducers: {
     setQuery: (state, action) => {
       state.query = action.payload;
-    },
-    setSearchResult: (state, action) => {
-      state.searchResult = action.payload;
-    },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -34,6 +29,7 @@ export const searchSlice = createSlice({
       .addCase(fetchAnimeData.fulfilled, (state, action) => {
         state.loading = false;
         state.searchResult = action.payload;
+        state.dataLoaded = true
       })
       .addCase(fetchAnimeData.rejected, (state) => {
         state.loading = false;
@@ -42,10 +38,6 @@ export const searchSlice = createSlice({
   },
 });
 
-export const { setQuery, setSearchResult, setLoading } = searchSlice.actions;
-
-export const selectQuery = (state) => state.search.query;
-export const selectSearchResult = (state) => state.search.searchResult;
-export const selectLoading = (state) => state.search.loading;
+export const { setQuery } = searchSlice.actions;
 
 export default searchSlice.reducer;
