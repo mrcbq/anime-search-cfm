@@ -5,8 +5,6 @@ const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-
-    JIKAN_API_URL = `https://api.jikan.moe/v4/anime?q=${query}`
     onSearch(query);
   };
 

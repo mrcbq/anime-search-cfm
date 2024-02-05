@@ -1,4 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { fetchData } from '../../utils/fetchdata';
+
+
+export const fetchAnimeData = createAsyncThunk('search/fetchAnime', async (query) => {
+  const JIKAN_API_URL = `https://api.jikan.moe/v4/anime?q=${query}`
+  const data = await fetchData(JIKAN_API_URL)
+  return data
+})
 
 export const searchSlice = createSlice({
   name: 'search',
@@ -17,6 +25,20 @@ export const searchSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAnimeData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAnimeData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.searchResult = action.payload;
+      })
+      .addCase(fetchAnimeData.rejected, (state) => {
+        state.loading = false;
+        state.searchResult = [];
+      });
   },
 });
 
