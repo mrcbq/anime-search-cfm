@@ -5,8 +5,6 @@ import { fetchAnimeData, setQuery } from '../redux/slices/searchSlice';
 const SearchBar = () => {
   const dispatch = useDispatch();
   const [localQuery, setLocalQuery] = useState('');
-  // const fullState = useSelector((state) => state);
-  // console.log(fullState);
   const query = useSelector((state) => state.search.query);
 
   const handleSearch = async (e) => {

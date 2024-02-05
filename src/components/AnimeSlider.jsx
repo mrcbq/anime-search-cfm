@@ -11,7 +11,7 @@ const AnimeSlider = () => {
 
   if (dataLoaded) {
     return (
-      <div className="cardsContainer">
+      <div className="cards-container">
         {data.map((anime) => (
           <div key={anime.mal_id}>
             <Card
